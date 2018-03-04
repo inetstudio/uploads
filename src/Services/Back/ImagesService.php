@@ -69,7 +69,6 @@ class ImagesService implements ImagesServiceContract
                         $cropData = json_decode($cropJSON, true);
 
                         foreach (config($disk.'.images.conversions'.$model.'.'.$name.'.'.$key) as $conversion) {
-
                             event(app()->makeWith('InetStudio\Uploads\Contracts\Events\Back\UpdateUploadEventContract', [
                                 'object' => $item,
                                 'collection' => $conversion['name'],
@@ -87,7 +86,7 @@ class ImagesService implements ImagesServiceContract
                     }
                 }
 
-                if (isset($properties['tempname']) && isset($properties['filename']) && $properties['tempname'] <> "" && $properties['filename'] <> "") {
+                if (isset($properties['tempname']) && isset($properties['filename']) && $properties['tempname'] != '' && $properties['filename'] != '') {
                     $image = $properties['tempname'];
                     $filename = $properties['filename'];
 
