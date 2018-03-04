@@ -17,7 +17,7 @@ class UploaderService implements UploaderServiceContract
 
     /**
      * UploaderService constructor.
-     * 
+     *
      * @param Request $request
      */
     public function __construct(Request $request)
@@ -70,11 +70,11 @@ class UploaderService implements UploaderServiceContract
 
         if ($this->request->file($name)) {
             $file = $this->request->file($name);
-            $chunk = (int)$this->request->get('chunk', false);
-            $chunks = (int)$this->request->get('chunks', false);
+            $chunk = (int) $this->request->get('chunk', false);
+            $chunks = (int) $this->request->get('chunks', false);
             $originalName = $this->request->get('name');
 
-            $filePath = $this->getPath() . '/' . $originalName . '.part';
+            $filePath = $this->getPath().'/'.$originalName.'.part';
             $this->removeOldData($filePath);
 
             $this->appendData($filePath, $file);
