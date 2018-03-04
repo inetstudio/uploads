@@ -1,0 +1,28 @@
+{
+    "name": "inetstudio/uploads",
+    "description": "Package for uploads",
+    "homepage": "https://github.com/inetstudio/uploads",
+    "license": "MIT",
+    "authors": [
+      {
+        "name": "Konstantin Bukin",
+        "email": "bukin@inetstudio.ru"
+      }
+    ],
+    "require": {
+      "spatie/laravel-medialibrary": "^6.1"
+    },
+    "autoload": {
+      "psr-4": {
+        "InetStudio\\Uploads\\": "src/"
+      }
+    },
+    "extra": {
+      "laravel": {
+        "providers": [
+          "InetStudio\\Uploads\\Providers\\FormBuilderServiceProvider",
+          "InetStudio\\Uploads\\Providers\\UploadsServiceProvider"
+        ]
+      }
+    }
+}
