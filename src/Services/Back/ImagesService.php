@@ -92,7 +92,7 @@ class ImagesService implements ImagesServiceContract
 
                     $item->clearMediaCollection($name);
 
-                    array_forget($properties, ['tempname', 'temppath', 'filename']);
+                    array_forget($properties, ['tempname', 'temppath', 'filepath', 'filename']);
                     $properties = array_filter($properties);
 
                     $file = Storage::disk('temp')->getDriver()->getAdapter()->getPathPrefix().$image;
@@ -124,11 +124,11 @@ class ImagesService implements ImagesServiceContract
      * Получаем первый кроп изображения.
      *
      * @param $item
-     * @param $collection
+     * @param string $collection
      *
      * @return \Illuminate\Contracts\Routing\UrlGenerator|string
      */
-    public function getFirstCropImageUrl($item, $collection)
+    public function getFirstCropImageUrl($item, string $collection)
     {
         $media = $item->getFirstMedia($collection);
 
@@ -143,5 +143,28 @@ class ImagesService implements ImagesServiceContract
         }
 
         return '';
+    }
+
+    /**
+     * Получаем первый кроп изображения.
+     *
+     * @param $item
+     * @param string $collection
+     *
+     * @return array
+     */
+    public function getImageProperties($item, string $collection): array
+    {
+        $media = $item->getFirstMedia($collection);
+
+        if ($media && $media->custom_properties) {
+            $properties = $media->custom_properties;
+
+            array_forget($properties, 'crop');
+
+            return $properties;
+        }
+
+        return [];
     }
 }
