@@ -128,7 +128,7 @@ class ImagesService implements ImagesServiceContract
      *
      * @return \Illuminate\Contracts\Routing\UrlGenerator|string
      */
-    public function getFirstCropUploadUrl($item, $collection)
+    public function getFirstCropImageUrl($item, $collection)
     {
         $media = $item->getFirstMedia($collection);
 
