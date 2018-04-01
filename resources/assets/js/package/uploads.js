@@ -2,10 +2,10 @@ $(document).ready(function () {
     initImageUploaders($(document));
 });
 
-function initImageUploaders(container) {
+window.initImageUploaders = function (container) {
     if (container.find('.upload-btn').length > 0) {
         container.find('.upload-btn').each(function () {
-            var $input = $(this),
+            let $input = $(this),
                 wrapper = $(this).closest('.image_upload'),
                 url = $input.attr('data-target'),
                 field = $input.attr('data-field'),
@@ -22,7 +22,7 @@ function initImageUploaders(container) {
                 crop = $('#crop_image'),
                 crop_preview = $('#crop_preview');
 
-            var uploader = new plupload.Uploader({
+            let uploader = new plupload.Uploader({
                 browse_button: this,
                 url: url,
                 filters: {
@@ -84,7 +84,7 @@ function initImageUploaders(container) {
             $(this).on('click', function (event) {
                 event.preventDefault();
 
-                var cropSettings = JSON.parse($(this).attr('data-crop-settings'));
+                let cropSettings = JSON.parse($(this).attr('data-crop-settings'));
 
                 $('#crop_modal .modal-title').text($(this).closest('.form-group').children('label').text());
                 $('#crop_modal .description').text(cropSettings.description);
@@ -94,14 +94,14 @@ function initImageUploaders(container) {
                 $('#crop_modal .crop-size').attr('data-height', cropSettings.height);
                 $('#crop_modal .crop-size').attr('data-type', cropSettings.type);
 
-                var uniqID = getTimestamp();
+                let uniqID = UUID.generate();
 
                 $(this).attr('data-crop-button', uniqID);
-                var $cropField = $(this).next().attr('data-crop', uniqID);
+                let $cropField = $(this).next().attr('data-crop', uniqID);
                 $('#crop_modal .save').attr('data-target', uniqID);
                 $('#crop_image').attr('data-values', $cropField.val());
 
-                var imageSrc = $(this).closest('.form-group').find('img').attr('src');
+                let imageSrc = $(this).closest('.form-group').find('img').attr('src');
                 $('#crop_image').attr('src', imageSrc);
                 $('#crop_preview').attr('src', imageSrc);
 
@@ -110,7 +110,7 @@ function initImageUploaders(container) {
         });
 
         $('#crop_modal').on('hidden.bs.modal', function () {
-            var $image = $('#crop_image');
+            let $image = $('#crop_image');
 
             $image.cropper('destroy');
             $('#crop_modal .modal-title').text('');
@@ -120,9 +120,9 @@ function initImageUploaders(container) {
         });
 
         $('#crop_modal').on('shown.bs.modal', function () {
-            var $image = $('#crop_image');
+            let $image = $('#crop_image');
 
-            var cropperOptions = {
+            let cropperOptions = {
                 viewMode: 2,
                 preview: "#crop_modal .img-preview",
                 ready: function () {
@@ -131,7 +131,7 @@ function initImageUploaders(container) {
             };
 
             if ($image.attr('data-ratio')) {
-                var size = $image.attr('data-ratio').split('/');
+                let size = $image.attr('data-ratio').split('/');
                 cropperOptions.aspectRatio = parseInt(size[0]) / parseInt(size[1]);
             } else {
                 return;
@@ -143,12 +143,12 @@ function initImageUploaders(container) {
 
             $image.on({
                 crop: function (e) {
-                    var infoContainer = $('#crop_modal .crop-size'),
+                    let infoContainer = $('#crop_modal .crop-size'),
                         requiredWidth = infoContainer.attr('data-width'),
                         requiredHeight = infoContainer.attr('data-height'),
                         requiredType = infoContainer.attr('data-type'),
-                        width = Math.round(e.width),
-                        height = Math.round(e.height);
+                        width = Math.round(e.detail.width),
+                        height = Math.round(e.detail.height);
 
                     infoContainer.removeClass('label-primary').removeClass('label-danger');
 
@@ -161,7 +161,7 @@ function initImageUploaders(container) {
                             }
                             break;
                         case 'fixed':
-                            if (width != requiredWidth && height != requiredHeight) {
+                            if (width !== requiredWidth && height !== requiredHeight) {
                                 infoContainer.addClass('label-danger');
                             } else {
                                 infoContainer.addClass('label-primary');
@@ -175,7 +175,7 @@ function initImageUploaders(container) {
         });
 
         $('#crop_modal').on('click', '[data-method]', function () {
-            var $this = $(this),
+            let $this = $(this),
                 $image = $('#crop_image'),
                 data = $this.data(),
                 $target,
@@ -229,7 +229,7 @@ function initImageUploaders(container) {
         $('#crop_modal').on('click', '.save', function (event) {
             event.preventDefault();
 
-            var $image = $('#crop_image'),
+            let $image = $('#crop_image'),
                 cropData = JSON.stringify($image.cropper('getData')),
                 fieldSelector = $(this).attr('data-target'),
                 $field = $('[data-crop=' + fieldSelector + ']'),
@@ -242,4 +242,4 @@ function initImageUploaders(container) {
             $('#crop_modal').modal('hide');
         });
     }
-}
+};

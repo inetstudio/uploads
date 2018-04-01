@@ -1,54 +1,58 @@
-Admin.modals.uploaderModal = new Vue({
-    el: '#uploader_modal',
-    data: {
-        target: '',
-        upload: true,
-        progress: {
-            state: false,
-            percents: 0,
-            text: '',
-            style: {
-                width: '0%'
-            }
+if ($('#uploader_modal').length > 0) {
+    window.Admin.modals.uploaderModal = new Vue({
+        el: '#uploader_modal',
+        data: {
+            target: '',
+            upload: true,
+            progress: {
+                state: false,
+                percents: 0,
+                text: '',
+                style: {
+                    width: '0%'
+                }
+            },
+            images: [],
+            inputs: []
         },
-        images: [],
-        inputs: []
-    },
-    methods: {
-        save: function (event) {
-            var target = this.target;
+        methods: {
+            save: function (event) {
+                var target = this.target;
 
-            $.each(this.images, function (key, image) {
-                Admin.containers.images[target].images.push(image);
-            });
+                $.each(this.images, function (key, image) {
+                    Admin.containers.images[target].images.push(image);
+                });
 
-            $('#uploader_modal').modal('hide');
+                $('#uploader_modal').modal('hide');
 
-            this.images.splice(0);
-            this.upload = true;
+                this.images.splice(0);
+                this.upload = true;
+            }
         }
-    }
-});
+    });
+}
 
-Admin.modals.imageEditModal = new Vue({
-    el: '#edit_image_modal',
-    data: {
-        target: '',
-        image: {},
-        inputs: []
-    },
-    methods: {
-        save: function () {
-            var image = this.image;
+if ($('#edit_image_modal').length > 0) {
+    window.Admin.modals.imageEditModal = new Vue({
+        el: '#edit_image_modal',
+        data: {
+            target: '',
+            image: {},
+            inputs: []
+        },
+        methods: {
+            save: function () {
+                var image = this.image;
 
-            $('#edit_image_modal input').each(function () {
-                image.properties[$(this).attr('name')] = $(this).val();
-            });
+                $('#edit_image_modal input').each(function () {
+                    image.properties[$(this).attr('name')] = $(this).val();
+                });
 
-            $('#edit_image_modal').modal('hide');
+                $('#edit_image_modal').modal('hide');
+            }
         }
-    }
-});
+    });
+}
 
 tinymce.PluginManager.add('images', function(editor) {
     if ($(editor.getElement()).get(0).hasAttribute('hasImages')) {

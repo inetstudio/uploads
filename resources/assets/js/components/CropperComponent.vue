@@ -1,106 +1,4 @@
-@php
-    $transformName = str_replace(['.', '[]', '[', ']'], ['_', '', '.', ''], $name);
-
-    $errorFields = [$name.'.filename'];
-    if (isset($attributes['crops'])) {
-        $errorFields[] = str_replace(['.', '[]', '[', ']'], ['_', '', '.', ''], $name.'[crop]');
-        foreach ($attributes['crops'] as $crop) {
-            $errorFields[] = str_replace(['.', '[]', '[', ']'], ['_', '', '.', ''], $name.'[crop]'.'['.$crop['name'].']');
-        }
-    }
-@endphp
-
-<div class="image_upload">
-    <div class="form-group @if (count(array_intersect($errors->getBag('default')->keys(), $errorFields)) > 0){!! "has-error" !!}@endif">
-        @if (isset($attributes['label']['title']))
-            {!! Form::label($name, $attributes['label']['title'], (isset($attributes['label']['options'])) ? $attributes['label']['options'] : ['class' => 'col-sm-2 control-label']) !!}
-        @endif
-        <div class="col-sm-10">
-            <div class="col-md-6">
-                <div class="ibox">
-                    <div class="progress progress-bar-default pace-inactive" style="display: none;">
-                        <div style="width: 0%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" role="progressbar" class="progress-bar">
-                            <span></span>
-                        </div>
-                    </div>
-                    <div class="ibox-content">
-                        <div class="sk-spinner sk-spinner-double-bounce">
-                            <div class="sk-double-bounce1"></div>
-                            <div class="sk-double-bounce2"></div>
-                        </div>
-                        <div class="preview">
-                            <img src="{{ (old($transformName.'.filepath')) ? old($transformName.'.filepath') : $attributes['image']['filepath'] }}" @if (! $attributes['image']['filepath'] && ! old($transformName.'.filepath'))data-src="holder.js/100px200?auto=yes&font=FontAwesome&text=&#xf1c5;"@endif class="m-b-md img-responsive placeholder">
-                        </div>
-                    </div>
-                </div>
-                @foreach ($errorFields as $errField)
-                    @foreach ($errors->get($errField) as $message)
-                        <span class="help-block m-b-xs">{{ $message }}</span>
-                    @endforeach
-                @endforeach
-            </div>
-            <div class="col-md-6">
-                <div class="btn-group">
-                    <a href="#" class="btn btn-success upload-btn" data-target="{{ route('back.upload') }}" data-field="{{ $name }}">
-                        <i class="fa fa-upload m-r-xs" style="margin-right: 10px;"></i>Загрузить изображение
-
-                        {!! Form::hidden('', (old($transformName.'.temppath')) ? old($transformName.'.temppath') : '', [
-                            'name' => $name.'[temppath]',
-                            'class' => 'image_temppath',
-                        ]) !!}
-
-                        {!! Form::hidden('', (old($transformName.'.tempname')) ? old($transformName.'.tempname') : '', [
-                            'name' => $name.'[tempname]',
-                            'class' => 'image_tempname',
-                        ]) !!}
-
-                        {!! Form::hidden('', (old($transformName.'.filepath')) ? old($transformName.'.filepath') : (isset($attributes['image']['filepath']) ? $attributes['image']['filepath'] : ''), [
-                            'name' => $name.'[filepath]',
-                            'class' => 'image_filepath',
-                        ]) !!}
-
-                        {!! Form::hidden('', (old($transformName.'.filename')) ? old($transformName.'.filename') : (isset($attributes['image']['filename']) ? $attributes['image']['filename'] : ''), [
-                            'name' => $name.'[filename]',
-                            'class' => 'image_filename',
-                        ]) !!}
-                    </a><br/>
-
-                    <div class="crop_buttons m-t-lg" style="@if (! isset($value) and ! old($transformName.'.filepath')) display:none @endif">
-                        @if (isset($attributes['crops']))
-                            @foreach ($attributes['crops'] as $crop)
-                                <a href="#" style="display: block;" class="btn m-b-xs btn-w-m {{ (($crop['value'] == '' and ! old($transformName.'.crop.'.$crop['name'])) or $errors->has($transformName.'.crop.'.$crop['name'])) ? 'btn-default' : 'btn-primary' }} start-cropper" data-ratio="{{ $crop['ratio'] }}" data-crop-button="" data-crop-settings="{{ json_encode($crop['size']) }}"><i class="fa fa-crop"></i> {{ $crop['title'] }}</a>
-
-                                {!! Form::hidden('', (old($transformName.'.crop.'.$crop['name'])) ? old($transformName.'.crop.'.$crop['name']) : $crop['value'], [
-                                    'name' => $name.'[crop]'.'['.$crop['name'].']',
-                                    'class' => 'crop-data',
-                                ]) !!}
-                            @endforeach
-                        @endif
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    @if (isset($attributes['additional']))
-        <div class="additional_fields" style="@if (! isset($value) and ! old($name.'.temppath')) display:none @endif">
-            @foreach ($attributes['additional'] as $field)
-                {!! Form::string($name.'['.$field["name"].']', $field['value'], [
-                    'label' => [
-                        'title' => $field['title'],
-                    ],
-                    'hr' => [
-                        'show' => false,
-                    ],
-                ]) !!}
-            @endforeach
-        </div>
-    @endif
-
-    <div class="hr-line-dashed"></div>
-</div>
-
-@pushonce('modals:crop')
+<template>
     <div id="crop_modal" tabindex="-1" role="dialog" aria-hidden="true" class="modal inmodal fade">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -116,7 +14,7 @@
                             <p class="m-t-lg">Размер выбранной области: <span class="label crop-size"></span></p>
 
                             <div class="m-b-xs">
-                                <img src="" class="m-b-md img-responsive center-block" id="crop_image">
+                                <img src="" class="m-b-md img-responsive center-block" ref="image">
                             </div>
 
                             <div class="btn-group m-b-xs" style="margin: 10px 10px 0 0;">
@@ -196,13 +94,12 @@
                         </div>
 
                         <div class="col-md-6">
-                            <div class="img-preview">
-                                <img src="" id="crop_preview" />
+                            <div class="img-preview" ref="preview">
+                                <img src="" />
                             </div>
                         </div>
                     </div>
                 </div>
-
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-white" data-dismiss="modal">Закрыть</button>
@@ -211,4 +108,68 @@
             </div>
         </div>
     </div>
-@endpushonce
+</template>
+
+<script>
+    export default {
+        name: 'vue-cropper',
+        props: {
+
+        },
+        mounted() {
+            let component = this;
+
+            let cropperOptions = {
+                viewMode: 2,
+                preview: component.$refs.preview,
+                aspectRatio: component.options.ratio,
+                data: component.options.data
+            };
+
+            $(component.$refs.image).on({
+                crop: function (e) {
+                    let width = Math.round(e.width);
+                    let height = Math.round(e.height);
+
+                    //infoContainer.removeClass('label-primary').removeClass('label-danger');
+
+                    switch (component.crop.type) {
+                        case 'min':
+                            if (width < component.crop.width || height < component.crop.height) {
+                                //infoContainer.addClass('label-danger');
+                            } else {
+                                //infoContainer.addClass('label-primary');
+                            }
+                            break;
+                        case 'fixed':
+                            if (width !== component.crop.width && height !== component.crop.height) {
+                                //infoContainer.addClass('label-danger');
+                            } else {
+                                //infoContainer.addClass('label-primary');
+                            }
+                            break;
+                    }
+
+                    //infoContainer.text(width + 'x' + height);
+                }
+            }).cropper(cropperOptions);
+        },
+        data() {
+            return {
+                crop: {
+                    type: '',
+                    width: 0,
+                    height: 0
+                },
+                options: {
+                    data: '',
+                    ratio: 1
+                },
+            };
+        }
+    }
+</script>
+
+<style scoped>
+
+</style>

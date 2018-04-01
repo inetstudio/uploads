@@ -1,0 +1,19 @@
+#uploader-area {
+    border: 10px dashed #999;
+    text-align: center;
+    color: #999;
+    font-size: 20px;
+    line-height: 300px;
+    cursor: pointer;
+}
+
+#uploader-area.dragover {
+    background: rgba(255, 255, 255, 0.4);
+    border-color: green;
+}
+
+.img-container, .img-preview {
+    overflow: hidden;
+    text-align: center;
+    width: 100%;
+}

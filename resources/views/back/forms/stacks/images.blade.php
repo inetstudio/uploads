@@ -7,6 +7,15 @@
 
     if (old($transformName.'.images')) {
         $media = old($transformName.'.images');
+        foreach ($media as &$img) {
+            if ($img['tempname']) {
+                $img['thumb'] = $img['src'];
+            } else {
+                $mediaItem = $attributes['media']->where('id', $img['id'])->first();
+                $collection = $mediaItem->collection_name;
+                $img['thumb'] = ($mediaItem && $mediaItem->getUrl($collection.'_admin')) ? url($mediaItem->getUrl($collection.'_admin')) : url($mediaItem->getUrl());
+            }
+        }
     } else {
         foreach ($attributes['media'] as $mediaItem) {
             $collection = $mediaItem->collection_name;
@@ -57,11 +66,6 @@
         </div>
     </div>
 </div>
-
-@pushonce('scripts:plupload')
-    <!-- PLUPLOAD -->
-    <script src="{!! asset('admin/js/plugins/plupload/plupload.full.min.js') !!}"></script>
-@endpushonce
 
 @pushonce('modals:uploader')
 <div class="modal inmodal fade" id="uploader_modal" tabindex="-1" role="dialog" aria-hidden="true" ref="vuemodal">
