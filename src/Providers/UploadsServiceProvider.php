@@ -51,10 +51,6 @@ class UploadsServiceProvider extends ServiceProvider
      */
     protected function registerPublishes(): void
     {
-        $this->publishes([
-            __DIR__.'/../../public' => public_path(),
-        ], 'public');
-
         $this->mergeConfigFrom(
             __DIR__.'/../../config/filesystems.php', 'filesystems.disks'
         );
