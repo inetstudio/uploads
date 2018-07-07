@@ -13,6 +13,8 @@ trait HasImages
 {
     use HasMediaTrait;
 
+    public $registerMediaConversionsUsingModelInstance = true;
+
     /**
      * Регистрируем преобразования изображений.
      *
@@ -23,7 +25,7 @@ trait HasImages
     public function registerMediaConversions(Media $media = null): void
     {
         $config = $this->images['config'] ?? '';
-        $model = $this->images['model'] ?? '';
+        $model = ($this->images['model']) ? $this->images['model'] : $this->material_type;
 
         if (! $config) {
             return;
