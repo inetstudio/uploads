@@ -72,9 +72,17 @@ tinymce.PluginManager.add('images', function(editor) {
                 add: function (index) {
                     var alt = (this.images[index].properties.alt) ? this.images[index].properties.alt : '',
                         description = (this.images[index].properties.description) ? this.images[index].properties.description : '',
-                        copyright = (this.images[index].properties.copyright) ? ' &copy; ' + this.images[index].properties.copyright : '';
+                        copyright = (this.images[index].properties.copyright) ? ' &copy; ' + this.images[index].properties.copyright : '',
+                        tpl = _.unescape($('.content-image-tempalte').first().html());
 
-                    tinymce.get(this.target).editorManager.execCommand('mceInsertContent', false, '<div class="article-block_img"><img src="' + this.images[index].src + '" alt="' + alt + '"><p class="fix">' + description + copyright + '</p></div>');
+                    var imageBlock = _.unescape(_.template(tpl)({
+                        src: this.images[index].src,
+                        alt: alt,
+                        description: description,
+                        copyright: copyright
+                    }));
+
+                    tinymce.get(this.target).editorManager.execCommand('mceInsertContent', false, imageBlock);
                 },
                 edit: function (index) {
                     var modalWindow = $('#edit_image_modal');

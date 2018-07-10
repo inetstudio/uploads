@@ -73,7 +73,7 @@
                                         $crop['value'] = json_encode($crop['value']);
                                     @endphp
                                 @endif
-                            
+
                                 <a href="#" style="display: block;" class="btn m-b-xs btn-w-m {{ (($crop['value'] == '' and ! old($transformName.'.crop.'.$crop['name'])) or $errors->has($transformName.'.crop.'.$crop['name'])) ? 'btn-default' : 'btn-primary' }} start-cropper" data-ratio="{{ $crop['ratio'] }}" data-crop-button="" data-crop-settings="{{ json_encode($crop['size']) }}"><i class="fa fa-crop"></i> {{ $crop['title'] }}</a>
 
                                 {!! Form::hidden('', (old($transformName.'.crop.'.$crop['name'])) ? old($transformName.'.crop.'.$crop['name']) : $crop['value'], [
