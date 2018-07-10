@@ -97,14 +97,12 @@ class ImagesService implements ImagesServiceContract
 
                     $file = Storage::disk('temp')->getDriver()->getAdapter()->getPathPrefix().$image;
 
-                    $media = $item->addMedia($file)
+                    $item->addMedia($file)
+                        ->withManipulations($manipulations)
                         ->withCustomProperties($properties)
                         ->usingName(pathinfo($filename, PATHINFO_FILENAME))
                         ->usingFileName($image)
                         ->toMediaCollection($name, $disk);
-
-                    $media->manipulations = $manipulations;
-                    $media->save();
                 } else {
                     $properties = array_filter($properties);
 
