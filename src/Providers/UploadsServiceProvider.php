@@ -94,6 +94,7 @@ class UploadsServiceProvider extends ServiceProvider
 
         // Services
         $this->app->bind('InetStudio\Uploads\Contracts\Services\Back\ImagesServiceContract', 'InetStudio\Uploads\Services\Back\ImagesService');
+        $this->app->bind('InetStudio\Uploads\Contracts\Services\Back\FilesServiceContract', 'InetStudio\Uploads\Services\Back\FilesService');
         $this->app->bind('InetStudio\Uploads\Contracts\Services\UploaderServiceContract', 'InetStudio\Uploads\Services\UploaderService');
     }
 }
