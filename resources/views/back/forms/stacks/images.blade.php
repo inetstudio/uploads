@@ -52,15 +52,21 @@
                     <input v-for="(value, key) in image.properties" :name="'{{ $name }}[images][' + index + '][properties][' + key + ']'" type="hidden" :value="value">
                 </div>
                 <div class="file-name">
-                    <a class="btn btn-primary btn-xs add" @click.prevent="add(index)">
-                        <i class="fa fa-plus"></i>
-                    </a>
-                    <a class="btn btn-white btn-xs edit" @click.prevent="edit(index)">
-                        <i class="fa fa-pencil"></i>
-                    </a>
-                    <a class="btn btn-danger btn-xs delete" @click.prevent="remove(index)">
-                        <i class="fa fa-trash"></i>
-                    </a>
+                    @if (in_array('add', $attributes['controls']))
+                        <a class="btn btn-primary btn-xs add" @click.prevent="add(index)">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    @endif
+                    @if (in_array('edit', $attributes['controls']))
+                        <a class="btn btn-white btn-xs edit" @click.prevent="edit(index)">
+                            <i class="fa fa-pencil"></i>
+                        </a>
+                    @endif
+                    @if (in_array('remove', $attributes['controls']))
+                        <a class="btn btn-danger btn-xs delete" @click.prevent="remove(index)">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    @endif
                 </div>
             </div>
         </div>
