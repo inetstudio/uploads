@@ -21,6 +21,7 @@
       "laravel": {
         "providers": [
           "InetStudio\\Uploads\\Providers\\FormBuilderServiceProvider",
+          "InetStudio\\Uploads\\Providers\\UploadsBindingsServiceProvider",
           "InetStudio\\Uploads\\Providers\\UploadsServiceProvider"
         ]
       }
