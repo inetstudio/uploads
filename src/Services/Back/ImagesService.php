@@ -69,6 +69,8 @@ class ImagesService implements ImagesServiceContract
                         $cropData = json_decode($cropJSON, true);
 
                         foreach (config($disk.'.images.conversions'.$model.'.'.$name.'.'.$key) as $conversion) {
+                            if (isset($conversion['skip_manipulations']) && $conversion['skip_manipulations']) continue;
+                                
                             event(app()->makeWith('InetStudio\Uploads\Contracts\Events\Back\UpdateUploadEventContract', [
                                 'object' => $item,
                                 'collection' => $conversion['name'],
