@@ -52,9 +52,11 @@ trait HasImages
                         }
 
                         if (isset($conversion['fit']['width']) && isset($conversion['fit']['height'])) {
-                            $imageConversion->fit('fill', $conversion['fit']['width'], $conversion['fit']['height']);
+                            $fitMethod = (isset($conversion['fit']['method'])) ? $conversion['fit']['method'] : 'fill';
 
-                            if (isset($conversion['fit']['background'])) {
+                            $imageConversion->fit($fitMethod, $conversion['fit']['width'], $conversion['fit']['height']);
+
+                            if ($fitMethod == 'fill' && isset($conversion['fit']['background'])) {
                                 $imageConversion->background($conversion['fit']['background']);
                             }
                         }
