@@ -3,33 +3,33 @@
 namespace InetStudio\Uploads\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Contracts\Foundation\Application;
 
 /**
  * Class UploadsBindingsServiceProvider.
  */
 class UploadsBindingsServiceProvider extends ServiceProvider
 {
+    /**
+    * @var  bool
+    */
     protected $defer = true;
 
-    public $bindings = [];
-
     /**
-     * UploadsBindingsServiceProvider constructor.
-     *
-     * @param Application $app
-     */
-    public function __construct(Application $app)
-    {
-        parent::__construct($app);
-
-        $this->bindings = getPackageBindings(__DIR__.'/../Contracts');
-    }
+    * @var  array
+    */
+    public $bindings = [
+        'InetStudio\Uploads\Contracts\Events\Back\UpdateUploadEventContract' => 'InetStudio\Uploads\Events\Back\UpdateUploadEvent',
+        'InetStudio\Uploads\Contracts\Exceptions\UploadExceptionContract' => 'InetStudio\Uploads\Exceptions\UploadException',
+        'InetStudio\Uploads\Contracts\Http\Controllers\Back\UploadsControllerContract' => 'InetStudio\Uploads\Http\Controllers\Back\UploadsController',
+        'InetStudio\Uploads\Contracts\Services\Back\FilesServiceContract' => 'InetStudio\Uploads\Services\Back\FilesService',
+        'InetStudio\Uploads\Contracts\Services\Back\ImagesServiceContract' => 'InetStudio\Uploads\Services\Back\ImagesService',
+        'InetStudio\Uploads\Contracts\Services\UploaderServiceContract' => 'InetStudio\Uploads\Services\UploaderService',
+    ];
 
     /**
      * Получить сервисы от провайдера.
      *
-     * @return array
+     * @return  array
      */
     public function provides()
     {
