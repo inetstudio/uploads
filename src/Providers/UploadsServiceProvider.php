@@ -2,6 +2,7 @@
 
 namespace InetStudio\Uploads\Providers;
 
+use Collective\Html\FormBuilder;
 use Illuminate\Support\ServiceProvider;
 
 class UploadsServiceProvider extends ServiceProvider
@@ -17,6 +18,7 @@ class UploadsServiceProvider extends ServiceProvider
         $this->registerPublishes();
         $this->registerRoutes();
         $this->registerViews();
+        $this->registerFormComponents();
     }
 
     /**
@@ -64,5 +66,17 @@ class UploadsServiceProvider extends ServiceProvider
     protected function registerViews(): void
     {
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'admin.module.uploads');
+    }
+
+    /**
+     * Регистрация компонентов форм.
+     *
+     * @return void
+     */
+    protected function registerFormComponents()
+    {
+        FormBuilder::component('crop', 'admin.module.uploads::back.forms.fields.crop', ['name', 'value', 'attributes']);
+        FormBuilder::component('files', 'admin.module.uploads::back.forms.fields.files', ['name', 'value', 'attributes']);
+        FormBuilder::component('imagesStack', 'admin.module.uploads::back.forms.stacks.images', ['name', 'value', 'attributes']);
     }
 }
