@@ -259,7 +259,7 @@ function initUploader(field) {
             drop_element: 'uploader-area',
             url: url,
             filters: {
-                mime_types: "image/*"
+                mime_types: "image/gif,image/jpeg,image/pjpeg,image/png"
             },
             chunk_size: '500kb',
             multi_selection: true,

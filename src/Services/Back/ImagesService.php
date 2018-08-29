@@ -57,8 +57,10 @@ class ImagesService implements ImagesServiceContract
                             ->toMediaCollection($name, $disk);
                     }
 
+                    $imagePath = ($media->mime_type == 'image/gif') ? $media->getFullUrl() : $media->getFullUrl($name.'_front');
+
                     $item->update([
-                        $name => str_replace($image['src'], $media->getFullUrl($name.'_front'), $item[$name]),
+                        $name => str_replace($image['src'], $imagePath, $item[$name]),
                     ]);
                 }
             } else {
