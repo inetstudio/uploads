@@ -73,7 +73,12 @@ window.initImageUploaders = function (container) {
 
                 $input.closest('.form-group').find('.start-cropper').removeClass('btn-primary').addClass('btn-default');
                 $input.closest('.form-group').find('.crop-data').val('');
-                cropButtons.slideDown();
+                if (file.type == 'image/gif') {
+                    cropButtons.slideUp();
+                } else {
+                    cropButtons.slideDown();
+                }
+
                 additionalFields.slideDown();
             });
         });
