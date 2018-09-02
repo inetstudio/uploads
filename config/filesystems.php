@@ -9,14 +9,14 @@ return [
 
     'temp' => [
         'driver' => 'local',
-        'root' => storage_path('app/public/temp/'),
-        'url' => env('APP_URL').'/storage/temp/',
+        'root' => storage_path('app/public/temp'),
+        'url' => env('APP_URL').'/storage/temp',
         'visibility' => 'public',
     ],
 
     'uploads' => [
         'driver' => 'local',
-        'root' => storage_path('uploads/'),
+        'root' => storage_path('uploads'),
         'visibility' => 'private',
     ],
 
