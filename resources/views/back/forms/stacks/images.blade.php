@@ -10,7 +10,7 @@
         foreach ($media as &$img) {
             if ($img['tempname']) {
                 $img['thumb'] = $img['src'];
-            } else {
+            } elseif ($attributes['media']) {
                 $mediaItem = $attributes['media']->where('id', $img['id'])->first();
                 $collection = $mediaItem->collection_name;
                 $img['thumb'] = ($mediaItem && $mediaItem->getUrl($collection.'_admin')) ? url($mediaItem->getUrl($collection.'_admin')) : url($mediaItem->getUrl());
