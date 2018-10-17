@@ -18,11 +18,15 @@ class FilesService implements ImagesServiceContract
      */
     public function attachToObject($item, array $files, string $disk): void
     {
-        foreach ($files as $name) {
-            $item->clearMediaCollection($name);
+        $request = request();
 
-            $item->addMediaFromRequest($name)
-                ->toMediaCollection($name, $disk);
+        foreach ($files as $name) {
+            if ($request->has($name)) {
+                $item->clearMediaCollection($name);
+
+                $item->addMediaFromRequest($name)
+                    ->toMediaCollection($name, $disk);
+            }
         }
     }
 }
