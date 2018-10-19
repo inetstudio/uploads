@@ -2,7 +2,7 @@
 
 namespace InetStudio\Uploads\Models\Traits;
 
-use Spatie\MediaLibrary\Media;
+use Spatie\MediaLibrary\Models\Media;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\Image\Exceptions\InvalidManipulation;
 
