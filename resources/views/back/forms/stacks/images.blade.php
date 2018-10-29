@@ -22,6 +22,7 @@
             $data = [
                 'id' => $mediaItem->id,
                 'src' => url($mediaItem->getUrl()),
+                'name' => $mediaItem->name,
                 'thumb' => ($mediaItem->getUrl($collection.'_admin')) ? url($mediaItem->getUrl($collection.'_admin')) : url($mediaItem->getUrl()),
                 'properties' => $mediaItem->custom_properties,
             ];
@@ -101,6 +102,10 @@
                                     <img :src="image.src" class="m-b-md img-responsive placeholder" :data-tempname="image.tempname" :data-filename="image.filename">
                                 </div>
                                 <div class="col-md-9 form-horizontal">
+                                    <div class="form-group">
+                                        <label for="description" class="col-sm-2 control-label">Имя файла</label>
+                                        <div class="col-sm-10"><input name="image_name[]" type="text" class="form-control" :value="image.name" disabled="disabled"></div>
+                                    </div>
                                     <div class="form-group" v-for="input in inputs">
                                         <label :for="input.name" class="col-sm-2 control-label">@{{ input.title }}</label>
                                         <div class="col-sm-10">
@@ -134,6 +139,12 @@
                 </div>
                 <div class="modal-body">
                     <div class="ibox-content form-horizontal">
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="description" class="col-sm-2 control-label">Имя файла</label>
+                                <div class="col-sm-10"><input name="edit_image_name" type="text" class="form-control" :value="image.name" disabled="disabled"></div>
+                            </div>
+                        </div>
                         <div class="row m-b-md">
                             <img :src="image.src" class="img-responsive" style="max-height: 400px; display: block; margin: auto" />
                             <div class="hr-line-dashed"></div>

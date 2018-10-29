@@ -299,6 +299,7 @@ function initUploader(field) {
                 src: response.result.tempPath,
                 thumb: response.result.tempPath,
                 tempname: response.result.tempName,
+                name: file.name.substring(0, file.name.lastIndexOf(".")),
                 filename: file.name,
                 properties: properties
             });
