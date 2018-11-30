@@ -2,6 +2,7 @@
 
 namespace InetStudio\Uploads\Services\Back;
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use InetStudio\Uploads\Contracts\Services\Back\ImagesServiceContract;
 
@@ -23,6 +24,11 @@ class ImagesService implements ImagesServiceContract
     {
         $model = ($model) ? '.'.$model : '';
 
+        if ($model == '.result') {
+            Log::info('Edit result '.$item->id.': '.json_encode(request()->all()));
+            Log::info('Edit result '.$item->id.' media: '.json_encode($item->media->toArray()));
+        }
+
         foreach ($images as $requestName => $name) {
             $properties = (is_numeric($requestName)) ? $request->get($name) : $request->input($requestName);
 
@@ -36,8 +42,14 @@ class ImagesService implements ImagesServiceContract
             ]));
 
             if (isset($properties['has_images']) && ! isset($properties['images'])) {
+                if ($model == '.result') {
+                    Log::info('Edit result '.$item->id.' images 1: '.$name);
+                }
                 $item->clearMediaCollection($name);
             } elseif (isset($properties['images'])) {
+                if ($model == '.result') {
+                    Log::info('Edit result '.$item->id.' images 2: '.$name.' | '.json_encode($properties['images']));
+                }
                 $item->clearMediaCollectionExcept($name, $properties['images']);
 
                 foreach ($properties['images'] as $image) {
@@ -94,6 +106,9 @@ class ImagesService implements ImagesServiceContract
                     $image = $properties['tempname'];
                     $filename = $properties['filename'];
 
+                    if ($model == '.result') {
+                        Log::info('Edit result '.$item->id.' images 3: '.$name);
+                    }
                     $item->clearMediaCollection($name);
 
                     array_forget($properties, ['tempname', 'temppath', 'filepath', 'filename']);
