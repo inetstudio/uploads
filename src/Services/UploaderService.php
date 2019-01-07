@@ -47,6 +47,7 @@ class UploaderService implements UploaderServiceContract
             throw app()->makeWith('InetStudio\Uploads\Contracts\Exceptions\UploadExceptionContract', [
                 'message' => 'Failed to open output stream.',
                 'code' => 102,
+                'previous' => null,
             ]);
         }
 
@@ -54,6 +55,7 @@ class UploaderService implements UploaderServiceContract
             throw app()->makeWith('InetStudio\Uploads\Contracts\Exceptions\UploadExceptionContract', [
                 'message' => 'Failed to open input stream.',
                 'code' => 101,
+                'previous' => null,
             ]);
         }
         while ($buff = fread($in, 4096)) {

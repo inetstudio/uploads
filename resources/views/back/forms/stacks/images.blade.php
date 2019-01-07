@@ -60,7 +60,7 @@
                     @endif
                     @if (in_array('edit', $attributes['controls']))
                         <a class="btn btn-white btn-xs edit" @click.prevent="edit(index)">
-                            <i class="fa fa-pencil"></i>
+                            <i class="fa fa-pencil-alt"></i>
                         </a>
                     @endif
                     @if (in_array('remove', $attributes['controls']))

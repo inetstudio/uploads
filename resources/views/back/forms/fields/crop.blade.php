@@ -128,7 +128,7 @@
                             <div class="btn-group m-b-xs" style="margin: 10px 10px 0 0;">
                                 <button type="button" class="btn btn-primary" data-method="setDragMode" data-option="move" title="Переместить" style="margin-right: 2px;">
                                     <span class="docs-tooltip" data-toggle="tooltip" data-animation="false" title="Переместить">
-                                      <span class="fa fa-arrows"></span>
+                                      <span class="fa fa-arrows-alt"></span>
                                     </span>
                                 </button>
                                 <button type="button" class="btn btn-primary" data-method="setDragMode" data-option="crop" title="Выбрать область" style="margin-right: 2px;">
@@ -177,12 +177,12 @@
                             <div class="btn-group m-b-xs" style="margin: 10px 10px 0 0;">
                                 <button type="button" class="btn btn-primary" data-method="rotate" data-option="-45" title="Повернуть влево" style="margin-right: 2px;">
                                     <span class="docs-tooltip" data-toggle="tooltip" data-animation="false" title="Повернуть влево">
-                                      <span class="fa fa-rotate-left"></span>
+                                      <span class="fa fa-undo"></span>
                                     </span>
                                 </button>
                                 <button type="button" class="btn btn-primary" data-method="rotate" data-option="45" title="Повернуть вправо" style="margin-right: 2px;">
                                     <span class="docs-tooltip" data-toggle="tooltip" data-animation="false" title="Повернуть вправо">
-                                      <span class="fa fa-rotate-right"></span>
+                                      <span class="fa fa-redo"></span>
                                     </span>
                                 </button>
                             </div>
@@ -190,12 +190,12 @@
                             <div class="btn-group m-b-xs" style="margin: 10px 10px 0 0;">
                                 <button type="button" class="btn btn-primary" data-method="scaleX" data-option="-1" title="Отразить горизонтально" style="margin-right: 2px;">
                                     <span class="docs-tooltip" data-toggle="tooltip" data-animation="false" title="Отразить горизонтально">
-                                      <span class="fa fa-arrows-h"></span>
+                                      <span class="fa fa-arrows-alt-h"></span>
                                     </span>
                                 </button>
                                 <button type="button" class="btn btn-primary" data-method="scaleY" data-option="-1" title="Отразить вертикально" style="margin-right: 2px;">
                                     <span class="docs-tooltip" data-toggle="tooltip" data-animation="false" title="Отразить вертикально">
-                                      <span class="fa fa-arrows-v"></span>
+                                      <span class="fa fa-arrows-alt-v"></span>
                                     </span>
                                 </button>
                             </div>

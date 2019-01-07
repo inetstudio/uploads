@@ -2,6 +2,7 @@
 
 namespace InetStudio\Uploads\Models\Traits;
 
+use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\Models\Media;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\Image\Exceptions\InvalidManipulation;
@@ -66,6 +67,13 @@ trait HasImages
                             $imageConversion->optimize();
                         } else {
                             $imageConversion->quality($quality);
+                        }
+
+                        if (isset($conversion['watermark'])) {
+                            $imageConversion->watermark(storage_path('app/public/'.$conversion['watermark']['image']));
+                            $imageConversion->watermarkOpacity($conversion['watermark']['opacity']);
+                            $imageConversion->watermarkPadding(1, 1, Manipulations::UNIT_PERCENT);
+                            $imageConversion->watermarkWidth($conversion['watermark']['width'], Manipulations::UNIT_PERCENT);
                         }
 
                         $imageConversion->performOnCollections($collection);
