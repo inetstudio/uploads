@@ -29,7 +29,7 @@
                             <div class="sk-double-bounce2"></div>
                         </div>
                         <div class="preview">
-                            <img src="{{ (old($transformName.'.filepath')) ? old($transformName.'.filepath') : $attributes['image']['filepath'] }}" @if (! $attributes['image']['filepath'] && ! old($transformName.'.filepath'))data-src="holder.js/100px200?auto=yes&font=FontAwesome&text=&#xf1c5;"@endif class="m-b-md img-responsive placeholder">
+                            <img src="{{ (old($transformName.'.filepath')) ? old($transformName.'.filepath') : $attributes['image']['filepath'] }}" @if (! $attributes['image']['filepath'] && ! old($transformName.'.filepath'))data-src="holder.js/100px200?auto=yes&font='Font Awesome 5 Free'&text=&#xf1c5;"@endif class="m-b-md img-responsive placeholder">
                         </div>
                     </div>
                 </div>
