@@ -24,7 +24,10 @@ class FilesService implements ImagesServiceContract
             if ($request->has($name)) {
                 $item->clearMediaCollection($name);
 
+                $fileName = str_random().'.'.$request->file($name)->guessExtension();
+
                 $item->addMediaFromRequest($name)
+                    ->usingFileName($fileName)
                     ->toMediaCollection($name, $disk);
             }
         }
