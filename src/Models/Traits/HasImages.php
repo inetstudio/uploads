@@ -22,6 +22,8 @@ trait HasImages
      * @param Media|null $media
      *
      * @throws InvalidManipulation
+     *
+     * @throws \League\Flysystem\FileNotFoundException
      */
     public function registerMediaConversions(Media $media = null): void
     {
@@ -74,6 +76,10 @@ trait HasImages
                             $imageConversion->watermarkOpacity($conversion['watermark']['opacity']);
                             $imageConversion->watermarkPadding(1, 1, Manipulations::UNIT_PERCENT);
                             $imageConversion->watermarkWidth($conversion['watermark']['width'], Manipulations::UNIT_PERCENT);
+                        }
+
+                        if (isset($conversion['responsive'])) {
+                            $imageConversion->withResponsiveImages();
                         }
 
                         $imageConversion->performOnCollections($collection);
