@@ -72,10 +72,32 @@ trait HasImages
                         }
 
                         if (isset($conversion['watermark'])) {
-                            $imageConversion->watermark(storage_path('app/public/'.$conversion['watermark']['image']));
-                            $imageConversion->watermarkOpacity($conversion['watermark']['opacity']);
-                            $imageConversion->watermarkPadding(1, 1, Manipulations::UNIT_PERCENT);
-                            $imageConversion->watermarkWidth($conversion['watermark']['width'], Manipulations::UNIT_PERCENT);
+                            $processWatermark = false;
+
+                            if (isset($conversion['watermark']['copyright'])) {
+                                $needle = trim(strtolower($conversion['watermark']['copyright']));
+                                $imageCopyright = trim(strtolower($media->getCustomProperty('copyright', '')));
+
+                                if ($imageCopyright == $needle) {
+                                    $processWatermark = true;
+                                }
+                            } else {
+                                $processWatermark = true;
+                            }
+
+                            if ($processWatermark) {
+                                $imageConversion->watermark(storage_path('app/public/'.$conversion['watermark']['image']));
+
+                                if (isset($conversion['watermark']['opacity'])) {
+                                    $imageConversion->watermarkOpacity($conversion['watermark']['opacity']);
+                                }
+
+                                $imageConversion->watermarkPadding(1, 1, Manipulations::UNIT_PERCENT);
+
+                                if (isset($conversion['watermark']['width'])) {
+                                    $imageConversion->watermarkWidth($conversion['watermark']['width'], Manipulations::UNIT_PERCENT);
+                                }
+                            }
                         }
 
                         if (isset($conversion['responsive'])) {

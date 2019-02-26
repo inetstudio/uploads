@@ -82,7 +82,7 @@ class UploaderService implements UploaderServiceContract
             $this->appendData($filePath, $file);
 
             if ($chunk == $chunks - 1) {
-                $file = new UploadedFile($filePath, $originalName, 'blob', filesize($filePath), UPLOAD_ERR_OK, true);
+                $file = new UploadedFile($filePath, $originalName, 'blob', UPLOAD_ERR_OK, true);
 
                 $result = $handler($file);
 
