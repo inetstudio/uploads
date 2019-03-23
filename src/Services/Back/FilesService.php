@@ -2,6 +2,7 @@
 
 namespace InetStudio\Uploads\Services\Back;
 
+use Illuminate\Support\Str;
 use InetStudio\Uploads\Contracts\Services\Back\ImagesServiceContract;
 
 /**
@@ -24,7 +25,7 @@ class FilesService implements ImagesServiceContract
             if ($request->has($name)) {
                 $item->clearMediaCollection($name);
 
-                $fileName = str_random().'.'.$request->file($name)->guessExtension();
+                $fileName = Str::random().'.'.$request->file($name)->guessExtension();
 
                 $item->addMediaFromRequest($name)
                     ->usingFileName($fileName)

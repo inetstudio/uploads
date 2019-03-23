@@ -2,6 +2,7 @@
 
 namespace InetStudio\Uploads\Services\Back;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 use InetStudio\Uploads\Contracts\Services\Back\ImagesServiceContract;
 
@@ -96,7 +97,7 @@ class ImagesService implements ImagesServiceContract
 
                     $item->clearMediaCollection($name);
 
-                    array_forget($properties, ['tempname', 'temppath', 'filepath', 'filename']);
+                    Arr::forget($properties, ['tempname', 'temppath', 'filepath', 'filename']);
                     $properties = array_filter($properties);
 
                     $file = Storage::disk('temp')->getDriver()->getAdapter()->getPathPrefix().$image;
@@ -162,7 +163,7 @@ class ImagesService implements ImagesServiceContract
         if ($media && $media->custom_properties) {
             $properties = $media->custom_properties;
 
-            array_forget($properties, 'crop');
+            Arr::forget($properties, 'crop');
 
             return $properties;
         }
