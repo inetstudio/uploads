@@ -1,6 +1,5 @@
 window.plupload = require('plupload');
 
-require('jasny-bootstrap/js/fileinput');
 require('cropper');
 
 //require('./store/uploads');
@@ -11,4 +10,5 @@ require('cropper');
 
 require('./plugins/tinymce/plugins/images');
 
+require('./package/fileinput');
 require('./package/uploads');

@@ -11,36 +11,34 @@
 @endphp
 
 <div class="image_upload">
-    <div class="form-group @if (count(array_intersect($errors->getBag('default')->keys(), $errorFields)) > 0){!! "has-error" !!}@endif">
+    <div class="form-group row @if (count(array_intersect($errors->getBag('default')->keys(), $errorFields)) > 0){!! "has-error" !!}@endif">
         @if (isset($attributes['label']['title']))
-            {!! Form::label($name, $attributes['label']['title'], (isset($attributes['label']['options'])) ? $attributes['label']['options'] : ['class' => 'col-sm-2 control-label']) !!}
+            {!! Form::label($name, $attributes['label']['title'], (isset($attributes['label']['options'])) ? $attributes['label']['options'] : ['class' => 'col-sm-2 col-form-label font-bold']) !!}
         @endif
         <div class="col-sm-10">
-            <div class="col-md-6">
-                <div class="ibox">
-                    <div class="progress progress-bar-default pace-inactive" style="display: none;">
-                        <div style="width: 0%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" role="progressbar" class="progress-bar">
-                            <span></span>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="ibox">
+                        <div class="progress" style="display: none;">
+                            <div style="width: 0%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" role="progressbar" class="progress-bar"></div>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="sk-spinner sk-spinner-double-bounce">
+                                <div class="sk-double-bounce1"></div>
+                                <div class="sk-double-bounce2"></div>
+                            </div>
+                            <div class="preview">
+                                <img src="{{ (old($transformName.'.filepath')) ? old($transformName.'.filepath') : $attributes['image']['filepath'] }}" @if (! $attributes['image']['filepath'] && ! old($transformName.'.filepath'))data-src="holder.js/100px200?auto=yes&font='Font Awesome 5 Free'&text=&#xf1c5;"@endif class="m-b-md img-fluid placeholder">
+                            </div>
                         </div>
                     </div>
-                    <div class="ibox-content">
-                        <div class="sk-spinner sk-spinner-double-bounce">
-                            <div class="sk-double-bounce1"></div>
-                            <div class="sk-double-bounce2"></div>
-                        </div>
-                        <div class="preview">
-                            <img src="{{ (old($transformName.'.filepath')) ? old($transformName.'.filepath') : $attributes['image']['filepath'] }}" @if (! $attributes['image']['filepath'] && ! old($transformName.'.filepath'))data-src="holder.js/100px200?auto=yes&font='Font Awesome 5 Free'&text=&#xf1c5;"@endif class="m-b-md img-responsive placeholder">
-                        </div>
-                    </div>
-                </div>
-                @foreach ($errorFields as $errField)
-                    @foreach ($errors->get($errField) as $message)
-                        <span class="help-block m-b-xs">{{ $message }}</span>
+                    @foreach ($errorFields as $errField)
+                        @foreach ($errors->get($errField) as $message)
+                            <span class="form-text m-b-xs">{{ $message }}</span>
+                        @endforeach
                     @endforeach
-                @endforeach
-            </div>
-            <div class="col-md-6">
-                <div class="btn-group">
+                </div>
+                <div class="col-md-6">
                     <a href="#" class="btn btn-success upload-btn" data-target="{{ route('back.upload') }}" data-field="{{ $name }}">
                         <i class="fa fa-upload m-r-xs" style="margin-right: 10px;"></i>Загрузить изображение
 
@@ -63,9 +61,9 @@
                             'name' => $name.'[filename]',
                             'class' => 'image_filename',
                         ]) !!}
-                    </a><br/>
+                    </a>
 
-                    <div class="crop_buttons m-t-lg" style="@if (! isset($value) and ! old($transformName.'.filepath')) display:none @endif">
+                    <div class="crop_buttons m-t-lg" style="@if ((! isset($value) && ! old($transformName.'.filepath')) || (isset($value) && $value->mime_type == 'image/gif'))  display:none @endif">
                         @if (isset($attributes['crops']))
                             @foreach ($attributes['crops'] as $crop)
                                 @if (is_array($crop['value']))
@@ -74,7 +72,7 @@
                                     @endphp
                                 @endif
 
-                                <a href="#" style="display: block;" class="btn m-b-xs btn-w-m {{ (($crop['value'] == '' and ! old($transformName.'.crop.'.$crop['name'])) or $errors->has($transformName.'.crop.'.$crop['name'])) ? 'btn-default' : 'btn-primary' }} start-cropper" data-ratio="{{ $crop['ratio'] }}" data-crop-button="" data-crop-settings="{{ json_encode($crop['size']) }}"><i class="fa fa-crop"></i> {{ $crop['title'] }}</a>
+                                <a href="#" class="btn m-b-xs btn-w-m {{ (($crop['value'] == '' and ! old($transformName.'.crop.'.$crop['name'])) or $errors->has($transformName.'.crop.'.$crop['name'])) ? 'btn-default' : 'btn-primary' }} start-cropper" data-ratio="{{ $crop['ratio'] }}" data-crop-button="" data-crop-settings="{{ json_encode($crop['size']) }}"><i class="fa fa-crop"></i> {{ $crop['title'] }}</a>
 
                                 {!! Form::hidden('', (old($transformName.'.crop.'.$crop['name'])) ? old($transformName.'.crop.'.$crop['name']) : $crop['value'], [
                                     'name' => $name.'[crop]'.'['.$crop['name'].']',
@@ -110,11 +108,13 @@
     <div id="crop_modal" tabindex="-1" role="dialog" aria-hidden="true" class="modal inmodal fade">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
+
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Закрыть</span></button>
                     <h4 class="modal-title"></h4>
                     <small class="font-bold">Выберите область изображения</small>
                 </div>
+
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6">
@@ -122,7 +122,7 @@
                             <p class="m-t-lg">Размер выбранной области: <span class="label crop-size"></span></p>
 
                             <div class="m-b-xs">
-                                <img src="" class="m-b-md img-responsive center-block" id="crop_image">
+                                <img src="" class="m-b-md img-fluid center-block" id="crop_image">
                             </div>
 
                             <div class="btn-group m-b-xs" style="margin: 10px 10px 0 0;">
@@ -208,7 +208,6 @@
                         </div>
                     </div>
                 </div>
-
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-white" data-dismiss="modal">Закрыть</button>

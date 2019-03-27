@@ -44,7 +44,7 @@
             <div class="file">
                 <span class="corner"></span>
                 <div class="image">
-                    <img :src="image.thumb" class="img-responsive">
+                    <img :src="image.thumb" class="img-fluid">
 
                     <input :name="'{{ $name }}[images][' + index + '][id]'" type="hidden" :value="image.id">
                     <input :name="'{{ $name }}[images][' + index + '][src]'" type="hidden" :value="image.src">
@@ -54,17 +54,17 @@
                 </div>
                 <div class="file-name">
                     @if (in_array('add', $attributes['controls']))
-                        <a class="btn btn-primary btn-xs add" @click.prevent="add(index)">
+                        <a href="#" class="btn btn-primary btn-xs add" @click.prevent="add(index)">
                             <i class="fa fa-plus"></i>
                         </a>
                     @endif
                     @if (in_array('edit', $attributes['controls']))
-                        <a class="btn btn-white btn-xs edit" @click.prevent="edit(index)">
+                        <a href="#" class="btn btn-white btn-xs edit" @click.prevent="edit(index)">
                             <i class="fa fa-pencil-alt"></i>
                         </a>
                     @endif
                     @if (in_array('remove', $attributes['controls']))
-                        <a class="btn btn-danger btn-xs delete" @click.prevent="remove(index)">
+                        <a href="#" class="btn btn-danger btn-xs delete" @click.prevent="remove(index)">
                             <i class="fa fa-trash"></i>
                         </a>
                     @endif
@@ -80,10 +80,12 @@
     <div class="modal inmodal fade" id="uploader_modal" tabindex="-1" role="dialog" aria-hidden="true" ref="vuemodal">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
+
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Закрыть</span></button>
                     <h4 class="modal-title">Загрузка изображений</h4>
                 </div>
+
                 <div class="modal-body">
                     <div class="ibox-content">
                         <div class="row">
@@ -99,15 +101,15 @@
                         <template v-for="image in images">
                             <div class="row upload-image m-t-md" :data-hash="image.hash">
                                 <div class="col-md-3">
-                                    <img :src="image.src" class="m-b-md img-responsive placeholder" :data-tempname="image.tempname" :data-filename="image.filename">
+                                    <img :src="image.src" class="m-b-md img-fluid placeholder" :data-tempname="image.tempname" :data-filename="image.filename">
                                 </div>
-                                <div class="col-md-9 form-horizontal">
-                                    <div class="form-group">
-                                        <label for="description" class="col-sm-2 control-label">Имя файла</label>
+                                <div class="col-md-9">
+                                    <div class="form-group row">
+                                        <label for="description" class="col-sm-2 col-form-label font-bold">Имя файла</label>
                                         <div class="col-sm-10"><input name="image_name[]" type="text" class="form-control" :value="image.name" disabled="disabled"></div>
                                     </div>
-                                    <div class="form-group" v-for="input in inputs">
-                                        <label :for="input.name" class="col-sm-2 control-label">@{{ input.title }}</label>
+                                    <div class="form-group row" v-for="input in inputs">
+                                        <label :for="input.name" class="col-sm-2 col-form-label font-bold">@{{ input.title }}</label>
                                         <div class="col-sm-10">
                                             <input class="form-control" v-model="image.properties[input.name]" :name="input.name" type="text" value="" :id="input.name">
                                         </div>
@@ -133,26 +135,26 @@
     <div class="modal inmodal fade" id="edit_image_modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
+
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Закрыть</span></button>
                     <h4 class="modal-title">Редактирование изображения</h4>
                 </div>
+
                 <div class="modal-body">
-                    <div class="ibox-content form-horizontal">
-                        <div class="row">
-                            <div class="form-group">
-                                <label for="description" class="col-sm-2 control-label">Имя файла</label>
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            <div class="form-group row">
+                                <label for="description" class="col-sm-2 col-form-label font-bold">Имя файла</label>
                                 <div class="col-sm-10"><input name="edit_image_name" type="text" class="form-control" :value="image.name" disabled="disabled"></div>
                             </div>
-                        </div>
-                        <div class="row m-b-md">
-                            <img :src="image.src" class="img-responsive" style="max-height: 400px; display: block; margin: auto" />
-                            <div class="hr-line-dashed"></div>
-                        </div>
-                        <div class="row">
+                            <div class="row m-b-md">
+                                <img :src="image.src" class="img-fluid" style="max-height: 400px; display: block; margin: auto" />
+                                <div class="hr-line-dashed"></div>
+                            </div>
                             <template v-for="input in inputs">
-                                <div class="form-group">
-                                    <label :for="input.name" class="col-sm-2 control-label">@{{ input.title }}</label>
+                                <div class="form-group row">
+                                    <label :for="input.name" class="col-sm-2 col-form-label font-bold">@{{ input.title }}</label>
                                     <div class="col-sm-10">
                                         <input class="form-control" :name="input.name" type="text" :value="image.properties[input.name]" :id="input.name">
                                     </div>

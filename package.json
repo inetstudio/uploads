@@ -3,7 +3,6 @@
   "version": "1.6.0",
   "dependencies": {
     "cropper": "^4.0.0",
-    "jasny-bootstrap": "https://github.com/jasny/bootstrap",
     "plupload": "^2.3.6"
   }
 }
