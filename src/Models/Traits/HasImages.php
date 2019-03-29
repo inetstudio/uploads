@@ -40,7 +40,7 @@ trait HasImages
             foreach (config($config.'.images.conversions.'.$model) as $collection => $image) {
                 foreach ($image as $crop) {
                     foreach ($crop as $conversion) {
-                        $imageConversion = $this->addMediaConversion($conversion['name'])->nonQueued();
+                        $imageConversion = $this->addMediaConversion($conversion['name']);
 
                         if (isset($conversion['size']['width'])) {
                             $imageConversion->width($conversion['size']['width']);
