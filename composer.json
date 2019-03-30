@@ -10,6 +10,7 @@
       }
     ],
     "require": {
+      "inetstudio/admin-panel": "1.8.*",
       "inetstudio/widgets": "1.8.*",
       "spatie/laravel-medialibrary": "^7.6"
     },
@@ -21,8 +22,8 @@
     "extra": {
       "laravel": {
         "providers": [
-          "InetStudio\\Uploads\\Providers\\UploadsBindingsServiceProvider",
-          "InetStudio\\Uploads\\Providers\\UploadsServiceProvider"
+          "InetStudio\\Uploads\\Providers\\BindingsServiceProvider",
+          "InetStudio\\Uploads\\Providers\\ServiceProvider"
         ]
       }
     }

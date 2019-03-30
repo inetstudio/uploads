@@ -2,13 +2,13 @@
 
 namespace InetStudio\Uploads\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Support\DeferrableProvider;
+use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
 /**
- * Class UploadsBindingsServiceProvider.
+ * Class BindingsServiceProvider.
  */
-class UploadsBindingsServiceProvider extends ServiceProvider implements DeferrableProvider
+class BindingsServiceProvider extends BaseServiceProvider implements DeferrableProvider
 {
     /**
     * @var  array
@@ -19,6 +19,7 @@ class UploadsBindingsServiceProvider extends ServiceProvider implements Deferrab
         'InetStudio\Uploads\Contracts\Http\Controllers\Back\UploadsControllerContract' => 'InetStudio\Uploads\Http\Controllers\Back\UploadsController',
         'InetStudio\Uploads\Contracts\Services\Back\FilesServiceContract' => 'InetStudio\Uploads\Services\Back\FilesService',
         'InetStudio\Uploads\Contracts\Services\Back\ImagesServiceContract' => 'InetStudio\Uploads\Services\Back\ImagesService',
+        'InetStudio\Uploads\Contracts\Services\Front\ItemsServiceContract' => 'InetStudio\Uploads\Services\Front\ItemsService',
         'InetStudio\Uploads\Contracts\Services\UploaderServiceContract' => 'InetStudio\Uploads\Services\UploaderService',
     ];
 

@@ -1,6 +1,6 @@
 {
   "name": "inetstudio-uploads",
-  "version": "1.6.0",
+  "version": "1.8.0",
   "dependencies": {
     "cropper": "^4.0.0",
     "plupload": "^2.3.6"

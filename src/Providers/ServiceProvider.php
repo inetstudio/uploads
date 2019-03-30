@@ -3,9 +3,12 @@
 namespace InetStudio\Uploads\Providers;
 
 use Collective\Html\FormBuilder;
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
-class UploadsServiceProvider extends ServiceProvider
+/**
+ * Class ServiceProvider.
+ */
+class ServiceProvider extends BaseServiceProvider
 {
     /**
      * Загрузка сервиса.
@@ -23,8 +26,6 @@ class UploadsServiceProvider extends ServiceProvider
 
     /**
      * Регистрация команд.
-     *
-     * @return void
      */
     protected function registerConsoleCommands(): void
     {
@@ -38,8 +39,6 @@ class UploadsServiceProvider extends ServiceProvider
 
     /**
      * Регистрация ресурсов.
-     *
-     * @return void
      */
     protected function registerPublishes(): void
     {
@@ -50,8 +49,6 @@ class UploadsServiceProvider extends ServiceProvider
 
     /**
      * Регистрация путей.
-     *
-     * @return void
      */
     protected function registerRoutes(): void
     {
@@ -60,8 +57,6 @@ class UploadsServiceProvider extends ServiceProvider
 
     /**
      * Регистрация представлений.
-     *
-     * @return void
      */
     protected function registerViews(): void
     {
@@ -70,8 +65,6 @@ class UploadsServiceProvider extends ServiceProvider
 
     /**
      * Регистрация компонентов форм.
-     *
-     * @return void
      */
     protected function registerFormComponents()
     {
