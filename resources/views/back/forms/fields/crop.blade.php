@@ -72,7 +72,7 @@
                                     @endphp
                                 @endif
 
-                                <a href="#" class="btn m-b-xs btn-w-m {{ (($crop['value'] == '' and ! old($transformName.'.crop.'.$crop['name'])) or $errors->has($transformName.'.crop.'.$crop['name'])) ? 'btn-default' : 'btn-primary' }} start-cropper" data-ratio="{{ $crop['ratio'] }}" data-crop-button="" data-crop-settings="{{ json_encode($crop['size']) }}"><i class="fa fa-crop"></i> {{ $crop['title'] }}</a>
+                                <a href="#" class="btn m-b-xs btn-w-m {{ $crop['class'] ?? '' }} {{ (($crop['value'] == '' and ! old($transformName.'.crop.'.$crop['name'])) or $errors->has($transformName.'.crop.'.$crop['name'])) ? 'btn-default' : 'btn-primary' }} start-cropper" data-ratio="{{ $crop['ratio'] }}" data-crop-button="" data-crop-settings="{{ json_encode($crop['size']) }}"><i class="fa fa-crop"></i> {{ $crop['title'] }}</a>
 
                                 {!! Form::hidden('', (old($transformName.'.crop.'.$crop['name'])) ? old($transformName.'.crop.'.$crop['name']) : $crop['value'], [
                                     'name' => $name.'[crop]'.'['.$crop['name'].']',
