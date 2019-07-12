@@ -2,7 +2,9 @@
 
 namespace InetStudio\Uploads\Services\Back;
 
+use DOMDocument;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use InetStudio\Uploads\Contracts\Services\Back\ImagesServiceContract;
 
@@ -60,8 +62,11 @@ class ImagesService implements ImagesServiceContract
 
                     $imagePath = ($media->mime_type == 'image/gif') ? $media->getFullUrl() : $media->getFullUrl($name.'_front');
 
+                    $src = $this->getImagesSrc($item[$name]);
+                    $srcReplaces = $this->getImageSrcReplaces($src);
+
                     $item->update([
-                        $name => str_replace($image['src'], $imagePath, $item[$name]),
+                        $name => str_replace($image['src'], $imagePath, str_replace(array_keys($srcReplaces), array_values($srcReplaces), $item[$name])),
                     ]);
                 }
             } else {
@@ -169,5 +174,49 @@ class ImagesService implements ImagesServiceContract
         }
 
         return [];
+    }
+
+    /**
+     * Получаем все пути на изображения.
+     *
+     * @param  string  $content
+     *
+     * @return array
+     */
+    protected function getImagesSrc($content): array
+    {
+        $doc = new DOMDocument();
+        $doc->loadHTML($content);
+
+        $tags = $doc->getElementsByTagName('img');
+
+        $src = [];
+
+        foreach ($tags as $tag) {
+            $src[] = $tag->getAttribute('src');
+        }
+
+        return $src;
+    }
+
+    /**
+     * Заменяем пути на абсолютные.
+     *
+     * @param  array  $src
+     *
+     * @return array
+     */
+    protected function getImageSrcReplaces(array $src): array
+    {
+        $replaces = [];
+
+        foreach ($src as $imageSrc) {
+            if (Str::contains($imageSrc, '/storage/')) {
+                $path = Str::after($imageSrc, '/storage/');
+                $replaces[$imageSrc] = url('storage/'.$path);
+            }
+        }
+
+        return $replaces;
     }
 }
