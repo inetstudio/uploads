@@ -186,7 +186,10 @@ class ImagesService implements ImagesServiceContract
     protected function getImagesSrc($content): array
     {
         $doc = new DOMDocument();
+
+        libxml_use_internal_errors(true);
         $doc->loadHTML($content);
+        libxml_use_internal_errors(false);
 
         $tags = $doc->getElementsByTagName('img');
 
