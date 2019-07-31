@@ -46,8 +46,10 @@ class ImagesService implements ImagesServiceContract
                 foreach ($properties['images'] as $image) {
                     if ($image['id']) {
                         $media = $item->media->find($image['id']);
-                        $media->custom_properties = $image['properties'];
-                        $media->save();
+                        if ($media) {
+                            $media->custom_properties = $image['properties'];
+                            $media->save();
+                        }
                     } else {
                         $filename = $image['filename'];
 
