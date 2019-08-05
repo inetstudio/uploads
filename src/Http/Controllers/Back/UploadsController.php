@@ -3,7 +3,7 @@
 namespace InetStudio\Uploads\Http\Controllers\Back;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use InetStudio\AdminPanel\Base\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use InetStudio\Uploads\Contracts\Http\Controllers\Back\UploadsControllerContract;
 
