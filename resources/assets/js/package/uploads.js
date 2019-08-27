@@ -144,6 +144,10 @@ window.initImageUploaders = function (container) {
 
             if ($image.attr('data-values')) {
                 cropperOptions.data = JSON.parse($image.attr('data-values'));
+
+                if (typeof cropperOptions.data == 'string') {
+                    cropperOptions.data = JSON.parse(cropperOptions.data);
+                }
             }
 
             $image.on({
