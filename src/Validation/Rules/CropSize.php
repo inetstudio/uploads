@@ -45,7 +45,7 @@ class CropSize implements Rule
      */
     public function passes($attribute, $value)
     {
-        $crop = json_decode($value, true);
+        $crop = json_decode(stripslashes($value), true);
 
         switch ($this->mode) {
             case 'min':
