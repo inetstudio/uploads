@@ -169,8 +169,7 @@ tinymce.PluginManager.add('images', function(editor) {
                     }));
 
                     tinymce.get(this.target).editorManager.execCommand('mceInsertContent', false, imageBlock);
-
-                    $(document).trigger('exitFromBlock', [imageBlock]);
+                    tinymce.exitFromBlock(imageBlock);
                 },
                 edit: function (index) {
                     let modalWindow = $('#edit_image_modal');
