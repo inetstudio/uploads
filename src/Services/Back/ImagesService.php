@@ -76,7 +76,7 @@ class ImagesService implements ImagesServiceContract
 
                 if (isset($properties['crop']) and config($disk.'.images.conversions'.$model)) {
                     foreach ($properties['crop'] as $key => $cropJSON) {
-                        $json = stripslashes($cropJSON);
+                        $json = str_replace('\\', '', $cropJSON);
                         $json = trim($json, '"');
 
                         $cropData = json_decode($json, true);

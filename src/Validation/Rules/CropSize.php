@@ -45,7 +45,7 @@ class CropSize implements Rule
      */
     public function passes($attribute, $value)
     {
-        $json = stripslashes($value);
+        $json = str_replace('\\', '', $value);
         $json = trim($json, '"');
 
         $crop = json_decode($json, true);
