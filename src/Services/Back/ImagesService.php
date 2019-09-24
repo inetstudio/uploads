@@ -29,10 +29,6 @@ class ImagesService implements ImagesServiceContract
         foreach ($images as $requestName => $name) {
             $properties = (is_numeric($requestName)) ? $request->get($name) : $request->input($requestName);
 
-            if (! $properties) {
-                continue;
-            }
-
             event(app()->makeWith('InetStudio\Uploads\Contracts\Events\Back\UpdateUploadEventContract', [
                 'object' => $item,
                 'collection' => $name,

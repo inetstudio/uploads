@@ -198,7 +198,7 @@ tinymce.PluginManager.add('images', function(editor) {
 
         editor.addButton('gallery', {
             title: 'Добавить галерею',
-            image: '/admin/images/tinymce-button-gallery-widget.png',
+            image: 'fa fa-images',
             onclick: function () {
                 Admin.containers.images['gallery'].images = [];
 
