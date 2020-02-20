@@ -52,12 +52,12 @@ class CropSize implements Rule
 
         switch ($this->mode) {
             case 'min':
-                if (round($crop['width']) < $this->width or round($crop['height']) < $this->height) {
+                if (round($crop['width']) < $this->width || round($crop['height']) < $this->height) {
                     return false;
                 }
                 break;
             case 'fixed':
-                if (round($crop['width']) != $this->width and round($crop['height']) != $this->height) {
+                if (round($crop['width']) != $this->width && round($crop['height']) != $this->height) {
                     return false;
                 }
                 break;

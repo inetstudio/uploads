@@ -5,7 +5,9 @@ namespace InetStudio\Uploads\Services\Back;
 use DOMDocument;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Spatie\MediaLibrary\Models\Media;
 use Illuminate\Support\Facades\Storage;
+use Spatie\MediaLibrary\Events\CollectionHasBeenCleared;
 use InetStudio\Uploads\Contracts\Services\Back\ImagesServiceContract;
 
 /**
@@ -18,9 +20,9 @@ class ImagesService implements ImagesServiceContract
      *
      * @param $request
      * @param $item
-     * @param array $images
-     * @param string $disk
-     * @param string $model
+     * @param  array  $images
+     * @param  string  $disk
+     * @param  string  $model
      */
     public function attachToObject($request, $item, array $images, string $disk, string $model = ''): void
     {
@@ -39,9 +41,9 @@ class ImagesService implements ImagesServiceContract
             ]));
 
             if (isset($properties['has_images']) && ! isset($properties['images'])) {
-                $item->clearMediaCollection($name);
+                $this->clearMediaCollection($item, $name);
             } elseif (isset($properties['images'])) {
-                $item->clearMediaCollectionExcept($name, $properties['images']);
+                $this->clearMediaCollectionExcept($item, $name, $properties['images']);
 
                 foreach ($properties['images'] as $image) {
                     if ($image['id']) {
@@ -68,13 +70,14 @@ class ImagesService implements ImagesServiceContract
                     $srcReplaces = $this->getImageSrcReplaces($src);
 
                     $item->update([
-                        $name => str_replace($image['src'], $imagePath, str_replace(array_keys($srcReplaces), array_values($srcReplaces), $item[$name])),
+                        $name => str_replace($image['src'], $imagePath,
+                            str_replace(array_keys($srcReplaces), array_values($srcReplaces), $item[$name])),
                     ]);
                 }
             } else {
                 $manipulations = [];
 
-                if (isset($properties['crop']) and config($disk.'.images.conversions'.$model)) {
+                if (isset($properties['crop']) && config($disk.'.images.conversions'.$model)) {
                     foreach ($properties['crop'] as $key => $cropJSON) {
                         $json = str_replace('\\', '', $cropJSON);
                         $json = trim($json, '"');
@@ -82,12 +85,15 @@ class ImagesService implements ImagesServiceContract
                         $cropData = json_decode($json, true);
 
                         foreach (config($disk.'.images.conversions'.$model.'.'.$name.'.'.$key) as $conversion) {
-                            if (isset($conversion['skip_manipulations']) && $conversion['skip_manipulations']) continue;
+                            if (isset($conversion['skip_manipulations']) && $conversion['skip_manipulations']) {
+                                continue;
+                            }
 
-                            event(app()->makeWith('InetStudio\Uploads\Contracts\Events\Back\UpdateUploadEventContract', [
-                                'object' => $item,
-                                'collection' => $conversion['name'],
-                            ]));
+                            event(app()->makeWith('InetStudio\Uploads\Contracts\Events\Back\UpdateUploadEventContract',
+                                [
+                                    'object' => $item,
+                                    'collection' => $conversion['name'],
+                                ]));
 
                             $manipulations[$conversion['name']] = [
                                 'manualCrop' => implode(',', [
@@ -105,7 +111,7 @@ class ImagesService implements ImagesServiceContract
                     $image = $properties['tempname'];
                     $filename = $properties['filename'];
 
-                    $item->clearMediaCollection($name);
+                    $this->clearMediaCollection($item, $name);
 
                     Arr::forget($properties, ['tempname', 'temppath', 'filepath', 'filename']);
                     $properties = array_filter($properties);
@@ -137,7 +143,7 @@ class ImagesService implements ImagesServiceContract
      * Получаем первый кроп изображения.
      *
      * @param $item
-     * @param string $collection
+     * @param  string  $collection
      *
      * @return \Illuminate\Contracts\Routing\UrlGenerator|string
      */
@@ -162,7 +168,7 @@ class ImagesService implements ImagesServiceContract
      * Получаем первый кроп изображения.
      *
      * @param $item
-     * @param string $collection
+     * @param  string  $collection
      *
      * @return array
      */
@@ -226,5 +232,71 @@ class ImagesService implements ImagesServiceContract
         }
 
         return $replaces;
+    }
+
+    /**
+     * Remove all media in the given collection.
+     *
+     * @param $item
+     * @param string $collectionName
+     *
+     * @return mixed
+     */
+    public function clearMediaCollection($item, string $collectionName = 'default')
+    {
+        $item->getMedia($collectionName)
+            ->each(function ($item, $key) {
+                $item->collection_name = $item->collection_name.'_deleted';
+                $item->save();
+            });
+
+        event(new CollectionHasBeenCleared($item, $collectionName));
+
+        if ($item->relationLoaded('media')) {
+            unset($item->media);
+        }
+
+        return $item;
+    }
+
+    /**
+     * Remove all media in the given collection except some.
+     *
+     * @param $item
+     * @param  string  $collectionName
+     * @param  array  $excludedMedia
+     *
+     * @return mixed
+     */
+    protected function clearMediaCollectionExcept($item, string $collectionName = 'default', $excludedMedia = [])
+    {
+        if ($excludedMedia instanceof Media) {
+            $excludedMedia = collect()->push($excludedMedia);
+        }
+
+        $excludedMedia = collect($excludedMedia);
+
+        if ($excludedMedia->isEmpty()) {
+            return $this->clearMediaCollection($collectionName);
+        }
+
+        $item->getMedia($collectionName)
+            ->reject(function (Media $media) use ($excludedMedia) {
+                return $excludedMedia->where($media->getKeyName(), $media->getKey())->count();
+            })
+            ->each(function ($item, $key) {
+                $item->collection_name = $item->collection_name.'_deleted';
+                $item->save();
+            });
+
+        if ($item->relationLoaded('media')) {
+            unset($item->media);
+        }
+
+        if ($item->getMedia($collectionName)->isEmpty()) {
+            event(new CollectionHasBeenCleared($item, $collectionName));
+        }
+
+        return $item;
     }
 }
