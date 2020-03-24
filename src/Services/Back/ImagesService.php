@@ -5,10 +5,10 @@ namespace InetStudio\Uploads\Services\Back;
 use DOMDocument;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use Spatie\MediaLibrary\Models\Media;
 use Illuminate\Support\Facades\Storage;
-use Spatie\MediaLibrary\Events\CollectionHasBeenCleared;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use InetStudio\Uploads\Contracts\Services\Back\ImagesServiceContract;
+use Spatie\MediaLibrary\MediaCollections\Events\CollectionHasBeenCleared;
 
 /**
  * Class ImagesService.

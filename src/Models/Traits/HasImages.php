@@ -3,16 +3,16 @@
 namespace InetStudio\Uploads\Models\Traits;
 
 use Spatie\Image\Manipulations;
-use Spatie\MediaLibrary\Models\Media;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Image\Exceptions\InvalidManipulation;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 /**
  * Trait HasImages.
  */
 trait HasImages
 {
-    use HasMediaTrait;
+    use InteractsWithMedia;
 
     public $registerMediaConversionsUsingModelInstance = true;
 

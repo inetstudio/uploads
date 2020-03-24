@@ -10,8 +10,8 @@
       }
     ],
     "require": {
-      "inetstudio/widgets": "^6.0",
-      "spatie/laravel-medialibrary": "^7.14"
+      "inetstudio/widgets": "^7.0",
+      "spatie/laravel-medialibrary": "^8.0"
     },
     "autoload": {
       "psr-4": {
