@@ -200,6 +200,10 @@ class ImagesService implements ImagesServiceContract
      */
     protected function getImagesSrc($content): array
     {
+        if (! trim($content)){
+            return [];
+        }
+
         $doc = new DOMDocument();
 
         libxml_use_internal_errors(true);

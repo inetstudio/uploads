@@ -87,7 +87,7 @@
     </div>
 
     @if (isset($attributes['additional']))
-        <div class="additional_fields" style="@if (! isset($value) and ! old($name.'.temppath')) display:none @endif">
+        <div class="additional_fields" style="@if (! isset($value) && ! old($name.'.temppath')) display:none @endif">
             @foreach ($attributes['additional'] as $field)
                 {!! Form::string($name.'['.$field["name"].']', $field['value'], [
                     'label' => [

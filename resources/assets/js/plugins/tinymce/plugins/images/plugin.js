@@ -114,7 +114,7 @@ if ($('#gallery_images').length > 0) {
             let form = $('#gallery_modal form'),
                 data = form.serializeJSON();
 
-            data.widgetID = widget.id;
+            data.widgetId = widget.id;
             data.material_type = 'gallery_widget';
 
             $.ajax({
@@ -224,7 +224,7 @@ tinymce.PluginManager.add('images', function(editor) {
                             url: route('back.widgets.gallery.get'),
                             method: 'GET',
                             data: {
-                                widgetID: widget.id,
+                                widgetId: widget.id,
                                 collection: 'gallery'
                             },
                             dataType: 'json',
