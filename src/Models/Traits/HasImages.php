@@ -71,6 +71,10 @@ trait HasImages
                             $imageConversion->quality($quality);
                         }
 
+                        foreach ($conversion['effects'] ?? [] as $effect => $value) {
+                            $imageConversion->$effect($value);
+                        }
+
                         if (isset($conversion['watermark'])) {
                             $processWatermark = false;
 
