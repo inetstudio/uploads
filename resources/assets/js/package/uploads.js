@@ -20,7 +20,31 @@ window.initImageUploaders = function (container) {
                 cropButtons = wrapper.find('.crop_buttons'),
                 additionalFields = wrapper.find('.additional_fields'),
                 crop = $('#crop_image'),
-                crop_preview = $('#crop_preview');
+                crop_preview = $('#crop_preview'),
+                deleteButton = wrapper.find('.delete');
+
+            deleteButton.on('click', function (event) {
+                event.preventDefault();
+
+                cropButtons.slideUp();
+                $(this).hide();
+
+                preview.attr('src', '');
+                filename.val('');
+                tempname.val('');
+                temppath.val('');
+                filepath.val('');
+                crop.attr('src', '');
+                crop_preview.attr('src', '');
+
+                if (preview.hasClass('placeholder')) {
+                    preview.data('src', 'holder.js/100px200?auto=yes&font=\'Font Awesome 5 Free\'&text=&#xf1c5;');
+                    Holder.setResizeUpdate(preview.get(0), false);
+                }
+
+                $input.closest('.form-group').find('.start-cropper').removeClass('btn-primary').addClass('btn-default');
+                $input.closest('.form-group').find('.crop-data').val('');
+            });
 
             let uploader = new plupload.Uploader({
                 browse_button: this,
@@ -78,6 +102,8 @@ window.initImageUploaders = function (container) {
                 } else {
                     cropButtons.slideDown();
                 }
+
+                deleteButton.show();
 
                 additionalFields.slideDown();
             });
