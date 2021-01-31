@@ -1,7 +1,7 @@
 <template>
-    <div class="progress progress-bar-default" v-show="progress.state">
-        <div :style="progress.style" aria-valuemax="100" aria-valuemin="0" :aria-valuenow="progress.percents" role="progressbar" class="progress-bar">
-            <span>{{ progress.text }}</span>
+    <div class="progress progress-bar-default" v-show="progressProp.state">
+        <div :style="progressProp.style" aria-valuemax="100" aria-valuemin="0" :aria-valuenow="progressProp.percents" role="progressbar" class="progress-bar">
+            <span>{{ progressProp.text }}</span>
         </div>
     </div>
 </template>
@@ -10,7 +10,7 @@
     export default {
         name: 'progress-bar',
         props: {
-            progress: {
+            progressProp: {
                 type: Object,
                 required: true
             }
