@@ -27,7 +27,13 @@ window.initImageUploaders = function (container) {
                 event.preventDefault();
 
                 cropButtons.slideUp();
+                additionalFields.slideUp();
+
                 $(this).hide();
+
+                additionalFields.find('input').each(function () {
+                    $(this).val('');
+                });
 
                 preview.attr('src', '');
                 filename.val('');
@@ -94,6 +100,10 @@ window.initImageUploaders = function (container) {
                 if (preview.hasClass('placeholder')) {
                     Holder.setResizeUpdate(preview.get(0), false);
                 }
+
+                additionalFields.find('input').each(function () {
+                    $(this).val('');
+                });
 
                 $input.closest('.form-group').find('.start-cropper').removeClass('btn-primary').addClass('btn-default');
                 $input.closest('.form-group').find('.crop-data').val('');

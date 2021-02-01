@@ -128,6 +128,8 @@ class ImagesService implements ImagesServiceContract
                         ->usingName(pathinfo($filename, PATHINFO_FILENAME))
                         ->usingFileName($image)
                         ->toMediaCollection($name, $disk);
+                } else if ($properties['filename'] === '' && $properties['filepath'] === '') {
+                    $this->clearMediaCollection($item, $name);
                 } else {
                     $properties = array_filter($properties);
 
