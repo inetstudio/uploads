@@ -63,6 +63,8 @@
                         ]) !!}
                     </a>
 
+                    <a href="#" class="btn btn-danger delete" style="{{ (! $attributes['image']['filepath']) ? 'display: none' : ''  }}"><i class="fa fa-times"></i></a>
+
                     <div class="crop_buttons m-t-lg" style="@if ((! isset($value) && ! old($transformName.'.filepath')) || (isset($value) && $value->mime_type == 'image/gif'))  display:none @endif">
                         @if (isset($attributes['crops']))
                             @foreach ($attributes['crops'] as $crop)
