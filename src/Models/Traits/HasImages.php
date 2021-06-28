@@ -71,6 +71,10 @@ trait HasImages
                             $imageConversion->quality($quality);
                         }
 
+                        if (isset($conversion['format'])) {
+                            $imageConversion->format($conversion['format']);
+                        }
+
                         foreach ($conversion['effects'] ?? [] as $effect => $value) {
                             $imageConversion->$effect($value);
                         }
