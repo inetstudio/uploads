@@ -1,3 +1,5 @@
+import Vuex from 'vuex';
+
 window.Admin.stores['uploads'] = new Vuex.Store({
     state: {
         src: '',

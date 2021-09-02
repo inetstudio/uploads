@@ -1,3 +1,5 @@
+import Vue from 'vue';
+
 if ($('#uploader_modal').length > 0) {
     window.Admin.modals.uploaderModal = new Vue({
         el: '#uploader_modal',
