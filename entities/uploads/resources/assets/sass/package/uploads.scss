@@ -1,0 +1,21 @@
+.media-uploader-single.filepond--root {
+  max-width: 450px;
+}
+
+.media-uploader-single .filepond--item {
+  height: 256px;
+}
+
+.media-uploader-multiple.filepond--root {
+  max-width: 780px;
+  max-height: 570px;
+}
+
+.media-uploader-multiple .filepond--item {
+  width: calc(33% - 0.5em);
+  height: 256px;
+}
+
+.media-uploader-single .filepond--file-status, .media-uploader-multiple .filepond--file-status {
+  display: none;
+}

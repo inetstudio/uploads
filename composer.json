@@ -10,19 +10,22 @@
       }
     ],
     "require": {
+      "inetstudio/admin-panel": "^8.0",
       "inetstudio/widgets": "^8.0",
       "spatie/laravel-medialibrary": "^9.0"
     },
     "autoload": {
       "psr-4": {
-        "InetStudio\\Uploads\\": "src/"
+        "InetStudio\\UploadsPackage\\": "package/src",
+        "InetStudio\\UploadsPackage\\Uploads\\": "entities/uploads/src"
       }
     },
     "extra": {
       "laravel": {
         "providers": [
-          "InetStudio\\Uploads\\Providers\\BindingsServiceProvider",
-          "InetStudio\\Uploads\\Providers\\ServiceProvider"
+          "InetStudio\\UploadsPackage\\Uploads\\Providers\\BindingsServiceProvider",
+          "InetStudio\\UploadsPackage\\Uploads\\Providers\\ServiceProvider",
+          "InetStudio\\UploadsPackage\\Providers\\ServiceProvider"
         ]
       }
     }
