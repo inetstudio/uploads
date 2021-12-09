@@ -1,3 +1,6 @@
+import Holder from 'holderjs';
+import { v4 as uuidv4 } from 'uuid';
+
 $(document).ready(function () {
     initImageUploaders($(document));
 });
@@ -135,7 +138,7 @@ window.initImageUploaders = function (container) {
                 $('#crop_modal .crop-size').attr('data-height', cropSettings.height);
                 $('#crop_modal .crop-size').attr('data-type', cropSettings.type);
 
-                let uniqID = UUID.generate();
+                let uniqID = uuidv4();
 
                 $(this).attr('data-crop-button', uniqID);
                 let $cropField = $(this).next().attr('data-crop', uniqID);

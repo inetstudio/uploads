@@ -1,7 +1,5 @@
-import Vue from 'vue';
-
 if ($('#uploader_modal').length > 0) {
-    window.Admin.modals.uploaderModal = new Vue({
+    window.Admin.modals.uploaderModal = new window.Vue({
         el: '#uploader_modal',
         data: {
             uploader: undefined,
@@ -36,7 +34,7 @@ if ($('#uploader_modal').length > 0) {
 }
 
 if ($('#edit_image_modal').length > 0) {
-    window.Admin.modals.imageEditModal = new Vue({
+    window.Admin.modals.imageEditModal = new window.Vue({
         el: '#edit_image_modal',
         data: {
             target: '',
@@ -58,7 +56,7 @@ if ($('#edit_image_modal').length > 0) {
 }
 
 if ($('#gallery_images').length > 0) {
-    Admin.containers.images['gallery'] = new Vue({
+    Admin.containers.images['gallery'] = new window.Vue({
         el: '#gallery_images',
         data: {
             editor: undefined,
@@ -149,7 +147,7 @@ tinymce.PluginManager.add('images', function(editor) {
             container = $('#' + name + '_images'),
             images = JSON.parse(container.attr('data-media'));
 
-        Admin.containers.images[name] = new Vue({
+        Admin.containers.images[name] = new window.Vue({
             el: '#' + name + '_images',
             data: {
                 target: name,

@@ -1,6 +1,4 @@
-import Vuex from 'vuex';
-
-window.Admin.stores['uploads'] = new Vuex.Store({
+window.Admin.vue.stores['uploads'] = new window.Vuex.Store({
     state: {
         src: '',
         crop: {}
