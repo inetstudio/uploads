@@ -1,3 +1,5 @@
+import Swal from 'sweetalert2';
+
 if ($('#uploader_modal').length > 0) {
     window.Admin.modals.uploaderModal = new window.Vue({
         el: '#uploader_modal',
@@ -130,10 +132,10 @@ if ($('#gallery_images').length > 0) {
                 error: function () {
                     $('#gallery_modal').find('.ibox-content').toggleClass('sk-loading');
 
-                    swal({
+                    Swal.fire({
                         title: "Ошибка",
                         text: "При сохранении виджета произошли ошибки",
-                        type: "error"
+                        icon: "error"
                     });
                 }
             });
@@ -207,10 +209,10 @@ tinymce.PluginManager.add('images', function(editor) {
                 Admin.containers.images['gallery'].editor = editor;
 
                 if (content !== '' && ! /<img class="content-widget".+data-type="gallery".+\/>/g.test(content)) {
-                    swal({
+                    Swal.fire({
                         title: "Ошибка",
                         text: "Необходимо выбрать виджет-галерею",
-                        type: "error"
+                        icon: "error"
                     });
 
                     return false;

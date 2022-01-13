@@ -64,15 +64,17 @@ class ImagesService implements ImagesServiceContract
                             ->toMediaCollection($name, $disk);
                     }
 
-                    $imagePath = ($media->mime_type == 'image/gif') ? $media->getFullUrl() : $media->getFullUrl($name.'_front');
+                    if ($item->getAttribute($name)) {
+                        $imagePath = ($media->mime_type == 'image/gif') ? $media->getFullUrl() : $media->getFullUrl($name.'_front');
 
-                    $src = $this->getImagesSrc($item[$name]);
-                    $srcReplaces = $this->getImageSrcReplaces($src);
+                        $src = $this->getImagesSrc($item[$name]);
+                        $srcReplaces = $this->getImageSrcReplaces($src);
 
-                    $item->update([
-                        $name => str_replace($image['src'], $imagePath,
-                            str_replace(array_keys($srcReplaces), array_values($srcReplaces), $item[$name])),
-                    ]);
+                        $item->update([
+                            $name => str_replace($image['src'], $imagePath,
+                                str_replace(array_keys($srcReplaces), array_values($srcReplaces), $item[$name])),
+                        ]);
+                    }
                 }
             } else {
                 $manipulations = [];
