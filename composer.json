@@ -11,7 +11,7 @@
     ],
     "require": {
       "inetstudio/admin-panel": "^10.0",
-      "inetstudio/widgets": "^9.0",
+      "inetstudio/widgets": "^10.0",
       "spatie/laravel-medialibrary": "^10.0"
     },
     "autoload": {
