@@ -55,7 +55,7 @@ class ImagesService implements ImagesServiceContract
                     } else {
                         $filename = $image['filename'];
 
-                        $file = Storage::disk('temp')->getDriver()->getAdapter()->getPathPrefix().$image['tempname'];
+                        $file = Storage::disk('temp')->path($image['tempname']);
 
                         $media = $item->addMedia($file)
                             ->withCustomProperties($image['properties'])
@@ -122,7 +122,7 @@ class ImagesService implements ImagesServiceContract
                     Arr::forget($properties, ['tempname', 'temppath', 'filepath', 'filename']);
                     $properties = array_filter($properties);
 
-                    $file = Storage::disk('temp')->getDriver()->getAdapter()->getPathPrefix().$image;
+                    $file = Storage::disk('temp')->path($image);
 
                     $item->addMedia($file)
                         ->withManipulations($manipulations)
